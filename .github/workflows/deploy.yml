@@ -17,16 +17,9 @@ jobs:
           node-version: '16'
       - name: Build and push Docker image
         run: |
-
-          docker build -t carolahn/myapp-express:latest .
-        
-      - name: Logar no Docker Hub
-        run: |
+          docker build -t ${{ secrets.DOCKER_REPO_URL }}:latest .
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-        
-      - name: Push da Imagem para o Docker Hub
-        run: |
-          docker push carolahn/myapp-express:latest
+          docker push ${{ secrets.DOCKER_REPO_URL }}:latest
       - name: SSH into EC2 instance and deploy
         uses: appleboy/ssh-action@master
         with:
