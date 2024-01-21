@@ -19,7 +19,7 @@ jobs:
         run: |
           docker build -t dummy-server .
           docker tag dummy-server:latest ${{ secrets.DOCKER_REPO_URL }}/dummy-server:latest
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin ${{ secrets.DOCKER_PASSWORD }}
           docker push ${{ secrets.DOCKER_REPO_URL }}/dummy-server:latest
       - name: SSH into EC2 instance and deploy
         uses: appleboy/ssh-action@master
