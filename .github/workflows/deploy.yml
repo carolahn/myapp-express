@@ -18,7 +18,7 @@ jobs:
       - name: Build and push Docker image
         run: |
           echo "Iniciando a construção da imagem Docker"
-          docker build -t dummy-server .
+          docker build -t dummy-server:latest .
           echo "Construção da imagem concluída"
           
           echo "Marcando a imagem Docker"
