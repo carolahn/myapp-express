@@ -17,10 +17,21 @@ jobs:
           node-version: '16'
       - name: Build and push Docker image
         run: |
+          echo "Iniciando a construção da imagem Docker"
           docker build -t dummy-server .
+          echo "Construção da imagem concluída"
+          
+          echo "Marcando a imagem Docker"
           docker tag dummy-server:latest ${{ secrets.DOCKER_REPO_URL }}/dummy-server:latest
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} docker.io
+          echo "Marcação da imagem concluída"
+        
+          echo "Fazendo login no Docker Hub"
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          echo "Login no Docker Hub concluído"
+        
+          echo "Enviando a imagem Docker para o Docker Hub"
           docker push ${{ secrets.DOCKER_REPO_URL }}/dummy-server:latest
+          echo "Envio da imagem concluído"
       - name: SSH into EC2 instance and deploy
         uses: appleboy/ssh-action@master
         with:
