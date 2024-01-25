@@ -27,6 +27,13 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.MY_EC2_SSH_KEY }}
           script: |
+            sudo su
+            sudo apt-get update
+            sudo apt-get install docker.io
+            sudo systemctl start docker
+            sudo systemctl enable docker
+            sudo usermod -aG docker $USER
+            sudo usermod -aG docker ubuntu
             sudo docker pull ${{ secrets.DOCKER_REPO_URL }}:latest
             sudo docker stop my-node-app || true
             sudo docker rm my-node-app || true
