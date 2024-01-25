@@ -27,9 +27,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.MY_EC2_SSH_KEY }}
           script: |
-            echo 'export PATH=$PATH:/usr/bin' >> ~/.bashrc
-            source ~/.bashrc          
-            sudo docker pull ${{ secrets.DOCKER_REPO_URL }}:latest
-            sudo docker stop my-node-app || true
-            sudo docker rm my-node-app || true
-            sudo docker run -d -p 3000:3000 --name my-node-app ${{ secrets.DOCKER_REPO_URL }}:latest
+            docker pull ${{ secrets.DOCKER_REPO_URL }}:latest
+            docker stop my-node-app || true
+            docker rm my-node-app || true
+            docker run -d -p 3000:3000 --name my-node-app ${{ secrets.DOCKER_REPO_URL }}:latest
